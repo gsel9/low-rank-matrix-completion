@@ -6,7 +6,7 @@ from collections import defaultdict
 import numpy as np
 
 # local
-from src.lmc import CMF  # , SCMF, WCMF
+from src.lrmc import CMF  # , SCMF, WCMF
 
 # third party
 from sklearn.metrics import mean_squared_error

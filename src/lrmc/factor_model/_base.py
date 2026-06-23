@@ -80,7 +80,7 @@ class MatrixCompletionBase(ABC):
         mask = (X != self.missing_value).astype(float)
         X_obs = X * mask
         M_obs = self.M * mask
-        return -mean_squared_error(X_obs.ravel(), M_obs.ravel())
+        return -1.0 * mean_squared_error(X_obs.ravel(), M_obs.ravel())
 
     def fit(self, X, y=None, verbose=1):
         """Run matrix completion on input matrix X using a factorization

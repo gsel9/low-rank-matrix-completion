@@ -7,7 +7,7 @@ import numpy as np
 import pytest
 from hypothesis import given, strategies
 from hypothesis.extra import numpy as nps
-from lmc.factor_model import MatrixCompletionBase
+from lrmc.factor_model import MatrixCompletionBase
 
 
 class TestMatrixCompletionBase(unittest.TestCase):

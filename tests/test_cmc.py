@@ -5,7 +5,7 @@ import unittest
 import numpy as np
 from hypothesis import given, strategies
 from hypothesis.extra import numpy as nps
-from lmc.factor_model import CMC
+from lrmc.factor_model import CMC
 
 
 class TestCMC(unittest.TestCase):
