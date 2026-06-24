@@ -72,7 +72,7 @@ def main():
     M, X = synthetic_data_generator(n_rows=100, n_timesteps=250, rank=rank)
 
     train_idx, test_idx = train_test_split(
-        range(X.shape[0]), test_Size=0.25, shuffle=False
+        range(X.shape[0]), test_size=0.25, shuffle=False
     )
 
     # TODO plot predictions as cmats AND using delta scores

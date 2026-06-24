@@ -6,7 +6,7 @@ from collections import defaultdict
 import numpy as np
 
 # local
-from src.lrmc import CMF  # , SCMF, WCMF
+from lrmc.factor_model import CMC  # , SCMC, WCMC
 
 # third party
 from sklearn.metrics import mean_squared_error
@@ -58,7 +58,7 @@ def main():
     param_grid = {"lambda1": 10 ** np.linspace(-2, 2, 5)}
     param_grid = ParameterGrid(param_grid)
 
-    model = CMF(rank=5, n_iter=3)
+    model = CMC(rank=5, n_iter=3)
 
     # result = gridsearch(param_grid, model, X_train, O_test,
     #                        X_test, mean_squared_error)

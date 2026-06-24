@@ -24,6 +24,7 @@ Low-rank matrix completion aims to recover the missing entries by exploiting the
 * [Total variation longitudinal matrix completion](./docs/README_tvlmc.md)
 * [Least-angle regression matrix completion](./docs/README_lars.md)
 * [Phase-shifted matrix completion](./docs/README_slmc.md)
+* [Geometric matrix completion with recurrent multi-graph neural networks](./docs/README_gcrnn.md)
 
 ## Installation
 
@@ -38,8 +39,8 @@ This ensures dependencies listed in `pyproject.toml` are handled correctly.
 A basic example involves estimating the entries of a matrix $X$, given only the entries indicated by $O_{train}$ and use the entries in $O_{test}$ to evaluate the reconstruction accuracy.
 
 ```python
-# lmc lib
-from lmc import CMC
+# lrmc lib
+from lrmc.factor_model import CMC
 from utils import train_test_data
 
 # third party

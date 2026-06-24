@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # local
-from src.lrmc.utils import finite_difference_matrix, laplacian_kernel_matrix
+from lrmc.utils import finite_difference_matrix, laplacian_kernel_matrix
 from utils import set_fig_size
 
 
