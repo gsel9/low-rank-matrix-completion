@@ -1,6 +1,12 @@
 """Test functionality of the GraphConvRNN factor model."""
 
 import numpy as np
+import pytest
+
+from lrmc.factor_model import _gcrnn_available
+
+if not _gcrnn_available:
+    pytest.skip("TensorFlow/Keras not available", allow_module_level=True)
 
 from lrmc.factor_model import GraphConvRNN
 

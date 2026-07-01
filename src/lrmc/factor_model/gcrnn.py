@@ -9,12 +9,18 @@ import numpy as np
 import scipy.sparse as sp
 import tensorflow as tf
 
+try:
+    import keras
+    _keras = keras
+except ImportError:
+    _keras = tf.keras
+
 from .. import utils
 
 from ._base import MatrixCompletionBase
 
 
-class _DiffusionNetwork(tf.keras.Model):
+class _DiffusionNetwork(_keras.Model):
     """Multi-graph CNN coupled to an LSTM that diffuses U and V towards a
     completed matrix M = U V^T."""
 
@@ -29,7 +35,7 @@ class _DiffusionNetwork(tf.keras.Model):
         self.cheby_col = cheby_col
         self.n_iter = n_iter
 
-        initializer = tf.keras.initializers.GlorotUniform(seed=seed)
+        initializer = _keras.initializers.GlorotUniform(seed=seed)
 
         # --- Convolution weights ---
         self.W_conv_U = self.add_weight(
@@ -226,7 +232,7 @@ class GraphConvRNN(MatrixCompletionBase):
             n_iter=self.n_diffusion_steps,
             seed=self.random_state,
         )
-        self.optimizer = tf.keras.optimizers.Adam(learning_rate=self.learning_rate)
+        self.optimizer = _keras.optimizers.Adam(learning_rate=self.learning_rate)
 
     def _forward(self):
         U_tf = tf.constant(self.U, dtype=tf.float32)
