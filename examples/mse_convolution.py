@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # local
-from src.lrmc import CMC, LMC
+from lrmc.factor_model import CMC, LMC
 from sklearn.metrics import mean_squared_error
 from synthetic_data import synthetic_data_generator
 from utils import format_axis, set_fig_size
@@ -97,8 +97,7 @@ def main():
         lmc_scores,
         fig=fig,
         axis=axis,
-        axis_label="LMC",
-        path_to_fig="./figures/rec_mse.pdf",
+        axis_label="LMC"
     )
 
 

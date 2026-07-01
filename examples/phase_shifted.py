@@ -2,7 +2,7 @@
 """
 
 # local
-from src.lrmc import SCMC
+from lrmc.factor_model import SCMC
 
 # third party
 from sklearn.metrics import mean_squared_error

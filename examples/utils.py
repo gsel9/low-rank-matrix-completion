@@ -5,6 +5,34 @@ import re
 # third party
 import numpy as np
 from PIL import Image
+from sklearn.model_selection import train_test_split
+
+# local
+from synthetic_data import synthetic_data_generator
+
+
+def train_test_data(n_rows=100, n_timesteps=200, rank=5, test_size=0.2, seed=42):
+    """Generate a synthetic data matrix with disjoint train/test observation masks.
+
+    Returns:
+        X: The (sparsely observed) data matrix.
+        O_train, O_test: Disjoint boolean masks over the observed entries in X.
+    """
+    _, X = synthetic_data_generator(
+        n_rows=n_rows, n_timesteps=n_timesteps, rank=rank, seed=seed
+    )
+
+    observed_rows, observed_cols = np.nonzero(X)
+    train_idx, test_idx = train_test_split(
+        np.arange(observed_rows.size), test_size=test_size, random_state=seed
+    )
+
+    O_train = np.zeros_like(X, dtype=bool)
+    O_test = np.zeros_like(X, dtype=bool)
+    O_train[observed_rows[train_idx], observed_cols[train_idx]] = True
+    O_test[observed_rows[test_idx], observed_cols[test_idx]] = True
+
+    return X, O_train, O_test
 
 
 def make_gif(filename, frame_dir):

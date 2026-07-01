@@ -1,5 +1,6 @@
 from ._base import MatrixCompletionBase
 from .cmc import CMC
+from .gcrnn import GraphConvRNN
 from .larsmc import LarsMC
 from .lmc import LMC
 from .scmc import SCMC
@@ -14,5 +15,6 @@ __all__ = [
     "WCMCADMM",
     "TVMC",
     "LarsMC",
+    "GraphConvRNN",
     "MatrixCompletionBase",
 ]
