@@ -48,19 +48,20 @@ class _DiffusionNetwork(tf.keras.Model):
 
         # --- Recurrent (U, V) ---
         def rnn_weights(prefix):
+            shape = (n_channels, n_channels)
             return {
-                "W_f": self.add_weight((n_channels, n_channels), initializer=initializer, name=f"W_f_{prefix}"),
-                "W_i": self.add_weight((n_channels, n_channels), initializer=initializer, name=f"W_i_{prefix}"),
-                "W_o": self.add_weight((n_channels, n_channels), initializer=initializer, name=f"W_o_{prefix}"),
-                "W_c": self.add_weight((n_channels, n_channels), initializer=initializer, name=f"W_c_{prefix}"),
-                "U_f": self.add_weight((n_channels, n_channels), initializer=initializer, name=f"U_f_{prefix}"),
-                "U_i": self.add_weight((n_channels, n_channels), initializer=initializer, name=f"U_i_{prefix}"),
-                "U_o": self.add_weight((n_channels, n_channels), initializer=initializer, name=f"U_o_{prefix}"),
-                "U_c": self.add_weight((n_channels, n_channels), initializer=initializer, name=f"U_c_{prefix}"),
-                "b_f": self.add_weight((n_channels,), initializer="zeros", name=f"b_f_{prefix}"),
-                "b_i": self.add_weight((n_channels,), initializer="zeros", name=f"b_i_{prefix}"),
-                "b_o": self.add_weight((n_channels,), initializer="zeros", name=f"b_o_{prefix}"),
-                "b_c": self.add_weight((n_channels,), initializer="zeros", name=f"b_c_{prefix}")
+                "W_f": self.add_weight(shape=shape, initializer=initializer, name=f"W_f_{prefix}"),
+                "W_i": self.add_weight(shape=shape, initializer=initializer, name=f"W_i_{prefix}"),
+                "W_o": self.add_weight(shape=shape, initializer=initializer, name=f"W_o_{prefix}"),
+                "W_c": self.add_weight(shape=shape, initializer=initializer, name=f"W_c_{prefix}"),
+                "U_f": self.add_weight(shape=shape, initializer=initializer, name=f"U_f_{prefix}"),
+                "U_i": self.add_weight(shape=shape, initializer=initializer, name=f"U_i_{prefix}"),
+                "U_o": self.add_weight(shape=shape, initializer=initializer, name=f"U_o_{prefix}"),
+                "U_c": self.add_weight(shape=shape, initializer=initializer, name=f"U_c_{prefix}"),
+                "b_f": self.add_weight(shape=(n_channels,), initializer="zeros", name=f"b_f_{prefix}"),
+                "b_i": self.add_weight(shape=(n_channels,), initializer="zeros", name=f"b_i_{prefix}"),
+                "b_o": self.add_weight(shape=(n_channels,), initializer="zeros", name=f"b_o_{prefix}"),
+                "b_c": self.add_weight(shape=(n_channels,), initializer="zeros", name=f"b_c_{prefix}"),
             }
 
         self.rnn_u = rnn_weights("u")

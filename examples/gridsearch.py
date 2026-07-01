@@ -32,39 +32,21 @@ def gridsearch(param_grid, model, X_train, O_test, X_test, score_fn):
     return result
 
 
-def kfold_gridsearch(param_grid, model, X, mask, score_fn, n_splits=5, random_state=42):
-    """
-    result = defaultdict(list)
-
-    kfold = KFold(n_splits=n_splits, shuffle=True, random_state=random_state)
-    for num_cv, (train_index, test_index) in enumerate(kfold.split(X)):
-        result["cv_fold"].extend([num_cv] * len(param_grid))
-        print(result["cv_fold"])
-        # assert afs
-        # X_train = X * O_train
-        # X_test = X * O_test
-
-    return
-    """
-    pass
-
-
 def main():
     X, O_train, O_test = train_test_data()
 
     X_train = X * O_train
-    # X_test = X * O_test
+    X_test = X * O_test
 
     param_grid = {"lambda1": 10 ** np.linspace(-2, 2, 5)}
     param_grid = ParameterGrid(param_grid)
 
     model = CMC(rank=5, n_iter=3)
 
-    # result = gridsearch(param_grid, model, X_train, O_test,
-    #                        X_test, mean_squared_error)
-    # print(result)
-
-    kfold_gridsearch(param_grid, model, X_train, O_test, mean_squared_error)
+    result = gridsearch(
+        param_grid, model, X_train, O_test, X_test, mean_squared_error
+    )
+    print(result)
 
 
 if __name__ == "__main__":

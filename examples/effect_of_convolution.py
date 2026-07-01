@@ -63,13 +63,8 @@ def main():
 
     fig, axis = plot_profile(Q[50:270], axis_label="V")
     fig, axis = plot_profile(DV[50:270], fig=fig, axis=axis, axis_label="DV")
-    plot_profile(
-        CDV[50:270],
-        fig=fig,
-        axis=axis,
-        axis_label="CDV",
-        path_to_fig="./figures/CDV.pdf",
-    )
+    plot_profile(CDV[50:270], fig=fig, axis=axis, axis_label="CDV")
+    plt.show()
 
 
 if __name__ == "__main__":

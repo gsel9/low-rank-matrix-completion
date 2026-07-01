@@ -97,8 +97,7 @@ def main():
         lmc_scores,
         fig=fig,
         axis=axis,
-        axis_label="LMC",
-        path_to_fig="./figures/rec_mse.pdf",
+        axis_label="LMC"
     )
 
 
