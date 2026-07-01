@@ -6,8 +6,7 @@ Simple example
 import numpy as np
 
 # local
-# from lmc import CMC
-# from plotting import plot_profiles_and_observations
+from lrmc.factor_model import CMC
 from sklearn.model_selection import train_test_split
 from synthetic_data import synthetic_data_generator
 
@@ -28,13 +27,7 @@ def factor_model(timepoints, X, V):
     return M_hat[range(timepoints.size), timepoints]
 
 
-def synthetic_control(timepoints, M):
-    """Synthetic control method."""
-    return
-
-
 def posterior_predictive(Y, M, t_pred, theta, number_of_states):
-    """Posterior predictive distribution."""
     """Predict probabilities of future observations in longitudinal data
     with a latent variable model.
 
@@ -57,6 +50,7 @@ def posterior_predictive(Y, M, t_pred, theta, number_of_states):
         )
 
     proba_z = np.empty((Y.shape[0], number_of_states))
+    # Domain for probability kernel
     domain = np.arange(1, number_of_states + 1)
     for i in range(Y.shape[0]):
         proba_z[i] = np.exp(logl[i]) @ np.exp(
@@ -68,24 +62,42 @@ def posterior_predictive(Y, M, t_pred, theta, number_of_states):
 
 def main():
     rank = 5
+    n_timesteps = 250
+    number_of_states = 4
+    theta = 2.5
 
-    M, X = synthetic_data_generator(n_rows=100, n_timesteps=250, rank=rank)
-
-    train_idx, test_idx = train_test_split(
-        range(X.shape[0]), test_Size=0.25, shuffle=False
+    M, X = synthetic_data_generator(
+        n_rows=100,
+        n_timesteps=n_timesteps,
+        rank=rank,
+        number_of_states=number_of_states,
+        theta=theta,
     )
 
-    # TODO plot predictions as cmats AND using delta scores
+    train_idx, test_idx = train_test_split(
+        range(X.shape[0]), test_size=0.25, shuffle=False
+    )
 
-    # plot_profiles_and_observations(X, M, n_profiles=4,
-    # # path_to_fig="./figures/ground_truth_data.pdf")
+    # Fit matrix completion only on the training entities. The test
+    # entities are held out and never seen while fitting the model.
+    mc_model = CMC(rank=rank, n_iter=200)
+    mc_model.fit(X[train_idx])
 
-    # factorization with convolution
-    # mfc_model = CMC(rank=rank, n_iter=200)
-    # mfc_model.fit(X)
+    # Predict the state of each held-out test entity at a future time
+    # point, having only observed its profile up to that point.
+    t_pred_time = n_timesteps - 50
+    t_pred = [t_pred_time] * len(test_idx)
 
-    # plot_profiles_and_observations(X, mfc_model.M, n_profiles=4,
-    # # path_to_fig="./figures/mfc_model.pdf")
+    Y_test = X[test_idx].copy()
+    Y_test[:, t_pred_time:] = 0
+
+    proba_z = posterior_predictive(
+        Y_test, mc_model.M, t_pred, theta=theta, number_of_states=number_of_states
+    )
+
+    predicted_states = np.argmax(proba_z, axis=1) + 1
+    print(f"Predicted states for {len(test_idx)} held-out entities:")
+    print(predicted_states)
 
 
 if __name__ == "__main__":

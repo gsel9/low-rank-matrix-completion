@@ -1,8 +1,8 @@
-[Installation](#Installation) | [Usage](#Usage) | [About](#About) | [Examples](#Examples) | [License](#License) | [References](#References)
+[Installation](#installation) | [Usage](#usage) | [About](#about) | [Key features](#key-features) | [Examples](#examples) | [License](#license)
 
-# LMC
+# LRMC
 
-![GitHub CI](https://github.com/gsel9/dgufs/actions/workflows/ci.yml/badge.svg)
+![GitHub CI](https://github.com/gsel9/low-rank-matrix-factorization/actions/workflows/run_tests.yml/badge.svg)
 ![GitHub CI](https://img.shields.io/badge/code%20style-black-000000.svg)
 
 ## About
@@ -24,6 +24,7 @@ Low-rank matrix completion aims to recover the missing entries by exploiting the
 * [Total variation longitudinal matrix completion](./docs/README_tvlmc.md)
 * [Least-angle regression matrix completion](./docs/README_lars.md)
 * [Phase-shifted matrix completion](./docs/README_slmc.md)
+* [Geometric matrix completion with recurrent multi-graph neural networks](./docs/README_gcrnn.md)
 
 ## Installation
 
@@ -33,13 +34,13 @@ pip install .
 ```
 This ensures dependencies listed in `pyproject.toml` are handled correctly.
 
-# Usage
+## Usage
 
 A basic example involves estimating the entries of a matrix $X$, given only the entries indicated by $O_{train}$ and use the entries in $O_{test}$ to evaluate the reconstruction accuracy.
 
 ```python
-# lmc lib
-from lmc import CMC
+# lrmc lib
+from lrmc.factor_model import CMC
 from utils import train_test_data
 
 # third party
@@ -57,3 +58,19 @@ Y_test = model.M * O_test
 
 score = mean_squared_error(X_test, Y_test)
 ```
+
+## Examples
+
+The [examples](./examples) directory contains runnable scripts demonstrating
+each model, e.g. hyperparameter search (`gridsearch.py`), rank selection with
+`LarsMC` (`rank_selection.py`), and phase-shifted matrix completion with
+`SCMC` (`phase_shifted.py`). Run them from within the `examples` directory
+with `src` on the Python path:
+
+```
+PYTHONPATH=../src python phase_shifted.py
+```
+
+## License
+
+This project is licensed under the [MIT License](./LICENSE).

@@ -10,7 +10,7 @@
 """
 
 # local
-from src.lrmc import LarsMC 
+from lrmc.factor_model import LarsMC
 
 # third party
 from sklearn.metrics import mean_squared_error
